@@ -7,7 +7,7 @@ from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 from random import choice
 
 
-token='' # вставить токен апи сюда
+token='2186ae0b66dcd6cf13f556008329e92e30f0fbe2d2cba42b02c5ecd5c2d179b4c82958b8609aab76d3473' # вставить токен апи сюда
 
 session=vk_api.VkApi(token=token)
 
@@ -146,12 +146,16 @@ for event in longpoll.listen():
 
                     write_message(event.user_id,f'Противник выбрал {clients[id_opponent][1]} \n{choice(win_quote)}\nСчет: ⭐️ (ты){score[0]}:{score[1]} ⭐️')
                     write_message(int(id_opponent),f'Противник выбрал {message} \n{choice(lose_quote)}\nСчет: ⭐️ (ты){score[1]}:{score[0]} ⭐️')
+                    clients[id_opponent][1] = 'Choosing...' #сбросить выбор
+                    clients[str(event.user_id)][1] = 'Choosing...'
 
                 elif clients[id_opponent][1] == message: #если один и тот же выбор
                     score = [clients[str(event.user_id)][3],clients[id_opponent][3]]
 
                     write_message(event.user_id,f'Противник тоже выбрал {clients[id_opponent][1]} \n{choice(draw_quote)}\nСчет: ⭐️ (ты){score[0]}:{score[1]} ⭐️')
                     write_message(int(id_opponent),f'Противник тоже выбрал {message} \n{choice(draw_quote)}\nСчет: ⭐️ (ты){score[1]}:{score[0]} ⭐️')
+                    clients[id_opponent][1] = 'Choosing...'
+                    clients[str(event.user_id)][1] = 'Choosing...'
 
                 else: 
                     clients[id_opponent][3] += 1
@@ -159,6 +163,8 @@ for event in longpoll.listen():
 
                     write_message(event.user_id,f'Противник выбрал {clients[id_opponent][1]} \n{choice(lose_quote)}\nСчет: ⭐️ (ты){score[0]}:{score[1]} ⭐️')
                     write_message(int(id_opponent),f'Противник выбрал {message} \n{choice(win_quote)}\nСчет: ⭐️ (ты){score[1]}:{score[0]} ⭐️')
+                    clients[id_opponent][1] = 'Choosing...'
+                    clients[str(event.user_id)][1] = 'Choosing...'
 
                 
                 if clients[str(event.user_id)][3] == 10: #если мы набрали 10 очков
